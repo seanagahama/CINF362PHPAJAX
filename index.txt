@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX and PHP Exercise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .response {
+            margin-top: 20px;
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Feedback Form</h1>
+    <form id="feedbackForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="feedback">Feedback:</label><br>
+        <textarea id="feedback" name="feedback" required></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="response" class="response"></div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Collect form data
+            const formData = new FormData(this);
+
+            // Create XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'process.php', true);
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const responseDiv = document.getElementById('response');
+                    responseDiv.innerHTML = xhr.responseText;
+                } else {
+                    console.error('Error occurred.');
+                }
+            };
+
+            xhr.send(formData);
+        });
+    </script>
+</body>
+</html>
